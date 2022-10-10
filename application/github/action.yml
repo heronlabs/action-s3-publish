@@ -1,0 +1,41 @@
+name: publish-s3-action
+
+author: Heronlabs
+
+description: Publish S3 static files
+
+inputs:
+  AWS_ACCESS_KEY_ID:
+    description: inputs.AWS_ACCESS_KEY_ID
+    required: true
+  AWS_SECRET_ACCESS_KEY:
+    description: inputs.AWS_SECRET_ACCESS_KEY
+    required: true
+  AWS_REGION:
+    description: inputs.AWS_REGION
+    required: true
+  BUILD_FOLDER:
+    description: inputs.BUILD_FOLDER
+    required: true
+  BUCKET_NAME:
+    description: inputs.BUCKET_NAME
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: '[PUBLISH] | Configure AWS Credentials'
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-region: ${{ inputs.AWS_REGION }}
+        aws-access-key-id: ${{ inputs.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ inputs.AWS_SECRET_ACCESS_KEY }}
+
+    - name: '[PUBLISH] | Publish statics on AWS S3 Bucket website'
+      shell: bash
+      run: |
+         chmod +x ./publish-s3-action/core/publish-s3-bucket.sh
+         ./publish-s3-action/core/publish-s3-bucket.sh
+      env:
+        BUILD_FOLDER: ${{ inputs.BUILD_FOLDER }}
+        BUCKET_NAME:  ${{ inputs.BUCKET_NAME }}
