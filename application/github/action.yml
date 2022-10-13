@@ -14,6 +14,15 @@ inputs:
   AWS_REGION:
     description: inputs.AWS_REGION
     required: true
+  AWS_ROLE_TO_ASSUME:
+    description: inputs.AWS_ROLE_TO_ASSUME
+    required: true
+  AWS_REGION:
+    description: inputs.AWS_REGION
+    required: true
+  AWS_ROLE_DURATION_SECONDS:
+    description: inputs.AWS_ROLE_DURATION_SECONDS
+    required: true
   BUILD_FOLDER:
     description: inputs.BUILD_FOLDER
     required: true
@@ -30,6 +39,9 @@ runs:
         aws-region: ${{ inputs.AWS_REGION }}
         aws-access-key-id: ${{ inputs.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ inputs.AWS_SECRET_ACCESS_KEY }}
+        role-to-assume: ${{ inputs.AWS_ROLE_TO_ASSUME }}
+        role-duration-seconds: ${{ inputs.AWS_ROLE_DURATION_SECONDS }}
+        role-session-name: publish-iac-action-session
 
     - name: '[PUBLISH] | Publish statics on AWS S3 Bucket website'
       shell: bash
