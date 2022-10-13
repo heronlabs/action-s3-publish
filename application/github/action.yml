@@ -11,9 +11,6 @@ inputs:
   AWS_SECRET_ACCESS_KEY:
     description: inputs.AWS_SECRET_ACCESS_KEY
     required: true
-  AWS_REGION:
-    description: inputs.AWS_REGION
-    required: true
   AWS_ROLE_TO_ASSUME:
     description: inputs.AWS_ROLE_TO_ASSUME
     required: true
