@@ -26,6 +26,9 @@ inputs:
   BUCKET_NAME:
     description: inputs.BUCKET_NAME
     required: true
+  PUBLIC_ACL:
+    description: inputs.PUBLIC_ACL
+    required: false
 
 runs:
   using: composite
@@ -48,3 +51,4 @@ runs:
       env:
         BUILD_FOLDER: ${{ inputs.BUILD_FOLDER }}
         BUCKET_NAME:  ${{ inputs.BUCKET_NAME }}
+        PUBLIC_ACL: ${{ inputs.PUBLIC_ACL }}
