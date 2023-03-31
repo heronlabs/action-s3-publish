@@ -2,7 +2,7 @@ name: publish-s3-action
 
 author: Heronlabs
 
-description: Publish S3 static files
+description: Publish S3
 
 inputs:
   AWS_ACCESS_KEY_ID:
@@ -46,8 +46,8 @@ runs:
     - name: '[PUBLISH] | Publish statics on AWS S3 Bucket website'
       shell: bash
       run: |
-         chmod +x ./publish-s3-action/core/publish-s3-bucket.sh
-         ./publish-s3-action/core/publish-s3-bucket.sh
+        chmod +x ./publish-s3-action/core/publish-s3-bucket.sh
+        ./publish-s3-action/core/publish-s3-bucket.sh
       env:
         BUILD_FOLDER: ${{ inputs.BUILD_FOLDER }}
         BUCKET_NAME:  ${{ inputs.BUCKET_NAME }}

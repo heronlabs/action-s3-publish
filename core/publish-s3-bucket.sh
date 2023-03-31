@@ -1,3 +1,5 @@
+#!/bin/sh
+
 ACL="private";
 
 if [ "$PUBLIC_ACL" == "true" ]; then
