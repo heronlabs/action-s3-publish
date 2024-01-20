@@ -10,7 +10,7 @@ aws s3 rm s3://${BUCKET_NAME} \
 --recursive
 
 aws s3 sync ./${BUILD_FOLDER} s3://${BUCKET_NAME} \
---cache-control max-age=3600,public
---delete
+--cache-control max-age=3600,public \
+--delete \
 --storage-class=INTELLIGENT_TIERING \
 --acl $ACL
