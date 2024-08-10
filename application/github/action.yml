@@ -41,7 +41,7 @@ runs:
         aws-secret-access-key: ${{ inputs.AWS_SECRET_ACCESS_KEY }}
         role-to-assume: ${{ inputs.AWS_ROLE_TO_ASSUME }}
         role-duration-seconds: ${{ inputs.AWS_ROLE_DURATION_SECONDS }}
-        role-session-name: publish-iac-action-session
+        role-session-name: publish-s3-action-session
 
     - name: '[PUBLISH] | Publish statics on AWS S3 Bucket website'
       shell: bash
