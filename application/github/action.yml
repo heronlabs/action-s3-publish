@@ -34,7 +34,7 @@ runs:
   using: composite
   steps:
     - name: '[PUBLISH] | Configure AWS Credentials'
-      uses: aws-actions/configure-aws-credentials@v1
+      uses: aws-actions/configure-aws-credentials@v4
       with:
         aws-region: ${{ inputs.AWS_REGION }}
         aws-access-key-id: ${{ inputs.AWS_ACCESS_KEY_ID }}
@@ -50,5 +50,5 @@ runs:
         ./publish-s3-action/core/publish-s3-bucket.sh
       env:
         BUILD_FOLDER: ${{ inputs.BUILD_FOLDER }}
-        BUCKET_NAME:  ${{ inputs.BUCKET_NAME }}
+        BUCKET_NAME: ${{ inputs.BUCKET_NAME }}
         PUBLIC_ACL: ${{ inputs.PUBLIC_ACL }}
