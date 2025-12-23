@@ -5,12 +5,6 @@ author: Heronlabs
 description: Publish S3
 
 inputs:
-  AWS_ACCESS_KEY_ID:
-    description: inputs.AWS_ACCESS_KEY_ID
-    required: true
-  AWS_SECRET_ACCESS_KEY:
-    description: inputs.AWS_SECRET_ACCESS_KEY
-    required: true
   AWS_ROLE_TO_ASSUME:
     description: inputs.AWS_ROLE_TO_ASSUME
     required: true
@@ -34,11 +28,9 @@ runs:
   using: composite
   steps:
     - name: '[PUBLISH] | Configure AWS Credentials'
-      uses: aws-actions/configure-aws-credentials@v4
+      uses: aws-actions/configure-aws-credentials@v5
       with:
         aws-region: ${{ inputs.AWS_REGION }}
-        aws-access-key-id: ${{ inputs.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ inputs.AWS_SECRET_ACCESS_KEY }}
         role-to-assume: ${{ inputs.AWS_ROLE_TO_ASSUME }}
         role-duration-seconds: ${{ inputs.AWS_ROLE_DURATION_SECONDS }}
         role-session-name: publish-s3-action-session
