@@ -34,6 +34,7 @@ runs:
         role-to-assume: ${{ inputs.AWS_ROLE_TO_ASSUME }}
         role-duration-seconds: ${{ inputs.AWS_ROLE_DURATION_SECONDS }}
         role-session-name: publish-s3-action-session
+        audience: sts.amazonaws.com
 
     - name: '[PUBLISH] | Publish statics on AWS S3 Bucket website'
       shell: bash
