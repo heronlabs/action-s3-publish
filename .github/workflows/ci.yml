@@ -1,0 +1,41 @@
+name: '[ CI ] | Continuous Integration'
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      spec:
+        description: The SEMVER specification.
+        required: true
+        type: choice
+        default: patch
+        options:
+          - 'major'
+          - 'minor'
+          - 'patch'
+
+permissions:
+  contents: write
+
+jobs:
+  ci:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: ludeeus/action-shellcheck@master
+        with:
+          scandir: './core'
+
+  release:
+    runs-on: ubuntu-24.04
+    needs: ci
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - uses: heronlabs/build-tag-release-action@v2
+        with:
+          github-token: ${{ github.token }}
