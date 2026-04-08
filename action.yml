@@ -2,44 +2,42 @@ name: publish-s3-action
 
 author: Heron Labs
 
-description: Publish S3
+description: Sync a build folder to an S3 bucket (website-style publish with cache headers and intelligent tiering).
 
 inputs:
   AWS_ROLE_TO_ASSUME:
-    description: inputs.AWS_ROLE_TO_ASSUME
+    description: ARN of the IAM role to assume via OIDC.
     required: true
   AWS_REGION:
-    description: inputs.AWS_REGION
+    description: AWS region where the S3 bucket lives.
     required: true
   AWS_ROLE_DURATION_SECONDS:
-    description: inputs.AWS_ROLE_DURATION_SECONDS
+    description: Duration in seconds for the assumed role session.
     required: true
   BUILD_FOLDER:
-    description: inputs.BUILD_FOLDER
+    description: Local folder (relative to the repo root) whose contents should be published.
     required: true
   BUCKET_NAME:
-    description: inputs.BUCKET_NAME
+    description: Destination S3 bucket name.
     required: true
   PUBLIC_ACL:
-    description: inputs.PUBLIC_ACL
+    description: Set to `"true"` to apply `public-read` ACL. Defaults to `private`.
     required: false
 
 runs:
   using: composite
   steps:
-    - name: '[PUBLISH] | Configure AWS Credentials'
-      uses: aws-actions/configure-aws-credentials@v5
+    - name: 'Configure AWS Credentials'
+      uses: aws-actions/configure-aws-credentials@v6
       with:
         aws-region: ${{ inputs.AWS_REGION }}
         role-to-assume: ${{ inputs.AWS_ROLE_TO_ASSUME }}
         role-duration-seconds: ${{ inputs.AWS_ROLE_DURATION_SECONDS }}
         role-session-name: publish-s3-action-session
 
-    - name: '[PUBLISH] | Publish statics on AWS S3 Bucket website'
+    - name: 'Publish statics to S3'
       shell: bash
-      run: |
-        chmod +x ./publish-s3-action/core/publish-s3-bucket.sh
-        ./publish-s3-action/core/publish-s3-bucket.sh
+      run: bash ${{ github.action_path }}/core/publish-s3-bucket.sh
       env:
         BUILD_FOLDER: ${{ inputs.BUILD_FOLDER }}
         BUCKET_NAME: ${{ inputs.BUCKET_NAME }}
