@@ -83,7 +83,7 @@ jobs:
         run: npm ci && npm run build
 
       - name: Publish to S3
-        uses: heronlabs/publish-s3-action@v2
+        uses: heronlabs/action-s3-publish@v2
         with:
           AWS_ROLE_TO_ASSUME: ${{ secrets.AWS_ROLE_ARN }}
           AWS_REGION: us-east-1
@@ -93,7 +93,7 @@ jobs:
           PUBLIC_ACL: 'true'
 
       - name: Invalidate CloudFront
-        uses: heronlabs/publish-cloudfront-action@v2
+        uses: heronlabs/action-cloudfront-publish@v2
         with:
           AWS_ROLE_TO_ASSUME: ${{ secrets.AWS_ROLE_ARN }}
           AWS_REGION: us-east-1
@@ -110,7 +110,3 @@ jobs:
 ## License
 
 MIT
-
----
-
-See also: [`workloads/docs/actions/publish-s3-action.md`](https://github.com/heronlabs/workloads/blob/main/docs/actions/publish-s3-action.md)

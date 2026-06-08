@@ -1,4 +1,4 @@
-name: publish-s3-action
+name: action-s3-publish
 
 author: Heron Labs
 
@@ -33,7 +33,7 @@ runs:
         aws-region: ${{ inputs.AWS_REGION }}
         role-to-assume: ${{ inputs.AWS_ROLE_TO_ASSUME }}
         role-duration-seconds: ${{ inputs.AWS_ROLE_DURATION_SECONDS }}
-        role-session-name: publish-s3-action-session
+        role-session-name: action-s3-publish-session
 
     - name: 'Publish statics to S3'
       shell: bash

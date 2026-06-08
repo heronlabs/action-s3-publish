@@ -1,10 +1,10 @@
 {
-  "name": "publish-s3-action",
+  "name": "action-s3-publish",
   "version": "1.0.1",
   "private": true,
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/heronlabs/publish-s3-action.git"
+    "url": "git+https://github.com/heronlabs/action-s3-publish.git"
   },
   "author": "Heron Labs",
   "license": "MIT"

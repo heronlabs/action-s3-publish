@@ -36,6 +36,6 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: heronlabs/build-tag-release-action@v2
+      - uses: heronlabs/action-tag-release-build@v2
         with:
           github-token: ${{ github.token }}
