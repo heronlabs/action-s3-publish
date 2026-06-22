@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# Minimal `aws` stub for action-s3-publish offline tests.
+#
+# Emulates only the aws surface the action uses:
+#   aws s3 rm   s3://BUCKET --recursive                  -> no-op (exit 0)
+#   aws s3 sync ./FOLDER s3://BUCKET --cache-control ...  -> no-op (exit 0)
+#
+# Every invocation is appended (one line, full argv) to $AWS_LOG so tests can assert
+# which subcommands ran, in which order, and with which flags. No network, no real AWS.
+set -euo pipefail
+
+: "${AWS_LOG:?AWS_LOG must point at a log file}"
+printf 'aws %s\n' "$*" >>"$AWS_LOG"
+
+case "${1:-} ${2:-}" in
+  "s3 rm")   : ;;
+  "s3 sync") : ;;
+  *) printf 'aws stub: unhandled argv: %s\n' "$*" >&2; exit 1 ;;
+esac
