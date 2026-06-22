@@ -3,6 +3,8 @@ name: '[ CI ] | Continuous Integration'
 on:
   push:
     branches: [main]
+  pull_request:
+    branches: [main]
   workflow_dispatch:
     inputs:
       spec:
@@ -28,9 +30,19 @@ jobs:
         with:
           scandir: './core'
 
+  test:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+
+      - name: 'Run offline harness'
+        shell: bash
+        run: bash test/run.sh
+
   release:
     runs-on: ubuntu-24.04
-    needs: ci
+    needs: [ci, test]
+    if: ${{ github.event_name == 'push' }}
     steps:
       - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
         with:

@@ -1,7 +1,8 @@
 {
   "stack": "shell",
   "verify": {
-    "lint": "shellcheck core/*.sh"
+    "lint": "shellcheck core/*.sh test/run.sh test/aws",
+    "test": "bash test/run.sh"
   },
   "worktree": { "dir": ".worktrees", "base": "main" },
   "pr": { "base": "main", "remote": "origin" },
