@@ -1,6 +1,6 @@
 # S3 Publish Action
 
-[![CI](https://github.com/heronlabs/action-s3-publish/actions/workflows/ci.yml/badge.svg)](https://github.com/heronlabs/action-s3-publish/actions/workflows/ci.yml)
+[![CI](https://github.com/heronlabs/action-s3-publish/actions/workflows/continuous-integration.yml/badge.svg)](https://github.com/heronlabs/action-s3-publish/actions/workflows/continuous-integration.yml)
 
 > Sync a build folder to an S3 bucket for website-style static hosting.
 
