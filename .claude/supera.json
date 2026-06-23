@@ -1,6 +1,7 @@
 {
-  "stack": "shell",
+  "stack": "pnpm",
   "verify": {
+    "install": "pnpm install --frozen-lockfile",
     "lint": "shellcheck core/*.sh test/run.sh test/aws",
     "test": "bash test/run.sh"
   },
