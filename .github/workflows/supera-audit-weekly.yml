@@ -40,7 +40,7 @@ jobs:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
           github_token: ${{ secrets.SUPERA_AUDIT_TOKEN || secrets.GITHUB_TOKEN }}
           plugin_marketplaces: https://github.com/heronlabs/supera.git
-          plugins: supera@supera-marketplace
+          plugins: supera@supera-marketplace@1.0.2
           prompt: /supera:audit --non-interactive
           show_full_output: true
           claude_args: '--allowed-tools Bash,Read,Glob,Grep,Agent,Edit,Write,Skill'

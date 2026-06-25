@@ -7,3 +7,10 @@ updates:
     groups:
       actions:
         patterns: ['*']
+  - package-ecosystem: npm # reads pnpm-lock.yaml
+    directory: '/'
+    schedule:
+      interval: weekly
+    groups:
+      npm:
+        patterns: ['*']

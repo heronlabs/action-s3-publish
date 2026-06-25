@@ -71,7 +71,7 @@ jobs:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
           github_token: ${{ secrets.SUPERA_AUDIT_TOKEN || secrets.GITHUB_TOKEN }}
           plugin_marketplaces: https://github.com/heronlabs/supera.git
-          plugins: supera@supera-marketplace
+          plugins: supera@supera-marketplace@1.0.2
           prompt: |
             A Dependabot pull request (#${{ steps.pr.outputs.number }}) has a failing CI run.
             Drive it green using the supera pr-watch skill — run the command below. This is a headless run with no human present, so never stop to ask; surface any block as a PR comment.
