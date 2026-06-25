@@ -65,7 +65,7 @@ jobs:
 
       - if: steps.pr.outputs.number != ''
         id: claude
-        uses: anthropics/claude-code-action@30544b674398ee15c84819bd87caf8a87e8c7b55 # v1.0.154
+        uses: anthropics/claude-code-action@428971d2ecd6e3a7cb0ee0da2a3a8b33fdb3678d # v1.0.157
         with:
           allowed_bots: '*' # job-level `if:` already gates to dependabot[bot]; '*' avoids the brittle 'dependabot' vs 'dependabot[bot]' login mismatch
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
@@ -156,7 +156,7 @@ jobs:
 
       - name: 'Upload run-metrics artifact'
         if: always()
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: metrics-${{ github.run_id }}
           path: metrics-event.json
