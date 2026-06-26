@@ -3,18 +3,30 @@ name: 'Continuous Deployment'
 on:
   push:
     branches: [main]
+  workflow_dispatch:
+    inputs:
+      spec:
+        description: The SEMVER specification.
+        required: true
+        type: choice
+        default: patch
+        options:
+          - 'major'
+          - 'minor'
+          - 'patch'
 
 permissions:
   contents: write
-  pull-requests: write
 
 jobs:
-  release-please:
+  release:
     runs-on: ubuntu-24.04
-    outputs:
-      release_created: ${{ steps.release.outputs.release_created }}
     steps:
-      - uses: googleapis/release-please-action@0dfd8538845b8e92600d271a895a5372865d4062 # v5
-        id: release
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
-          release-type: simple
+          fetch-depth: 0
+
+      - uses: heronlabs/action-tag-release-build@ba61b41d3a81fd567f17aefe8cc38321d17f0a14 # v4.0.0
+        with:
+          github-token: ${{ github.token }}
+          spec: ${{ inputs.spec }}
