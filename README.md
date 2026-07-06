@@ -1,4 +1,4 @@
-# 🥁 action-s3-publish — Sync a build folder to an S3 bucket for website-style static hosting.
+# 🪣 action-s3-publish — Sync a build folder to an S3 bucket for website-style static hosting.
 
 [![CI](https://github.com/heronlabs/action-s3-publish/actions/workflows/continuous-integration.yml/badge.svg)](https://github.com/heronlabs/action-s3-publish/actions/workflows/continuous-integration.yml)
 
