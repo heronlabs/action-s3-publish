@@ -1,3 +1,15 @@
 # OSX
 .DS_Store
 node_modules
+
+# Supera
+.worktrees/
+.serena
+
+# Editor
+.vscode/
+.idea/
+.claude/settings.local.json
+
+# Logs
+*.log
