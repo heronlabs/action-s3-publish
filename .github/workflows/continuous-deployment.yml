@@ -5,7 +5,7 @@ on:
     branches: [main]
   workflow_dispatch:
     inputs:
-      spec:
+      semantic:
         description: The SEMVER specification.
         required: true
         type: choice
@@ -18,6 +18,10 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   release:
     runs-on: ubuntu-24.04
@@ -26,7 +30,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: heronlabs/action-tag-release-build@ba61b41d3a81fd567f17aefe8cc38321d17f0a14 # v4.0.0
+      - uses: heronlabs/action-tag-release-build@c4c441f7f41889c4653530b50550384dba8c0375 # v5.0.2
         with:
-          github-token: ${{ github.token }}
-          spec: ${{ inputs.spec }}
+          gh_token: ${{ github.token }}
+          semantic: ${{ inputs.semantic }}

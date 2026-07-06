@@ -7,7 +7,7 @@
 
 setup() {
   SCRIPT="$BATS_TEST_DIRNAME/../core/publish-s3-bucket.sh"
-  STUB_DIR="$BATS_TEST_DIRNAME"   # contains the `aws` stub
+  STUB_DIR="$BATS_TEST_DIRNAME/__mocks__"   # contains the `aws` stub
 }
 
 # Run the action script inside a throwaway cwd containing a populated dist folder.

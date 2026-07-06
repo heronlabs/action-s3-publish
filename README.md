@@ -1,10 +1,20 @@
-# S3 Publish Action
+# 🥁 action-s3-publish — Sync a build folder to an S3 bucket for website-style static hosting.
 
 [![CI](https://github.com/heronlabs/action-s3-publish/actions/workflows/continuous-integration.yml/badge.svg)](https://github.com/heronlabs/action-s3-publish/actions/workflows/continuous-integration.yml)
 
 > Sync a build folder to an S3 bucket for website-style static hosting.
 
 Empties the destination bucket, then uploads everything under `BUILD_FOLDER` with long-lived cache headers and `INTELLIGENT_TIERING` storage. Authenticates via OIDC.
+
+## Contents
+
+- [Usage](#usage)
+- [Inputs](#inputs)
+- [Outputs](#outputs)
+- [Permissions](#permissions)
+- [How it works](#how-it-works)
+- [Notes](#notes)
+- [License](#license)
 
 ## Usage
 
@@ -23,7 +33,7 @@ jobs:
   publish:
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - name: Build
         run: npm ci && npm run build
@@ -90,6 +100,16 @@ The assumed role must allow listing, deleting, and putting objects in the target
 ```
 
 </details>
+
+## How it works
+
+Composite action with a single shell script (`core/publish-s3-bucket.sh`):
+
+1. **Validate inputs** — `BUCKET_NAME` and `BUILD_FOLDER` must be set.
+2. **Empty the target** — runs `aws s3 rm --recursive` on the destination bucket.
+3. **Upload statics** — runs `aws s3 sync` from `BUILD_FOLDER` with cache headers (`max-age=31536000`), `INTELLIGENT_TIERING` storage class, and the configured ACL (`private` by default, `public-read` when `PUBLIC_ACL=true`).
+
+Authenticates via `aws-actions/configure-aws-credentials` with an OIDC role.
 
 ## Notes
 
