@@ -4,6 +4,10 @@ author: Heron Labs
 
 description: Sync a build folder to an S3 bucket (website-style publish with cache headers and intelligent tiering).
 
+branding:
+  icon: hard-drive
+  color: green
+
 inputs:
   AWS_ROLE_TO_ASSUME:
     description: ARN of the IAM role to assume via OIDC.
