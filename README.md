@@ -1,8 +1,10 @@
-# 🪣 action-s3-publish — Sync a build folder to an S3 bucket for website-style static hosting.
+# 🪣 action-s3-publish — Sync folder to S3 bucket
 
-[![CI](https://github.com/heronlabs/action-s3-publish/actions/workflows/continuous-integration.yml/badge.svg)](https://github.com/heronlabs/action-s3-publish/actions/workflows/continuous-integration.yml)
+[![CI][ci-badge]][ci-url]
+[![License: MIT][license-badge]][license-url]
+[![GitHub Marketplace][marketplace-badge]][marketplace-url]
 
-> Sync a build folder to an S3 bucket for website-style static hosting.
+> **GitHub Action** to sync a build folder to an S3 bucket for website-style static hosting.
 
 Empties the destination bucket, then uploads everything under `BUILD_FOLDER` with long-lived cache headers and `INTELLIGENT_TIERING` storage. Authenticates via OIDC.
 
@@ -137,3 +139,10 @@ Authenticates via `aws-actions/configure-aws-credentials` with an OIDC role.
 ## License
 
 MIT
+
+[ci-badge]: https://github.com/heronlabs/action-s3-publish/actions/workflows/continuous-integration.yml/badge.svg
+[ci-url]: https://github.com/heronlabs/action-s3-publish/actions/workflows/continuous-integration.yml
+[license-badge]: https://img.shields.io/badge/License-MIT-blue.svg
+[license-url]: ./LICENSE
+[marketplace-badge]: https://img.shields.io/badge/GitHub-Marketplace-green.svg
+[marketplace-url]: https://github.com/marketplace/actions/action-s3-publish
