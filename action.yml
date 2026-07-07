@@ -37,7 +37,7 @@ runs:
 
     - name: 'Publish statics to S3'
       shell: bash
-      run: bash ${{ github.action_path }}/core/publish-s3-bucket.sh
+      run: bash ${{ github.action_path }}/core/publish.sh
       env:
         BUILD_FOLDER: ${{ inputs.BUILD_FOLDER }}
         BUCKET_NAME: ${{ inputs.BUCKET_NAME }}
