@@ -12,6 +12,7 @@ Empties the destination bucket, then uploads everything under `BUILD_FOLDER` wit
 - [Inputs](#inputs)
 - [Outputs](#outputs)
 - [Permissions](#permissions)
+- [Architecture](#architecture)
 - [How it works](#how-it-works)
 - [Notes](#notes)
 - [License](#license)
@@ -100,6 +101,16 @@ The assumed role must allow listing, deleting, and putting objects in the target
 ```
 
 </details>
+
+## Architecture
+
+```mermaid
+graph TD
+    A[action.yml] --> B[core/publish-s3-bucket.sh]
+    B --> C[tests/action.bats]
+    C --> D[Makefile]
+    D --> E[version.txt]
+```
 
 ## How it works
 
