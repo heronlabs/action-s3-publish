@@ -12,6 +12,7 @@ Empties the destination bucket, then uploads everything under `BUILD_FOLDER` wit
 - [Inputs](#inputs)
 - [Outputs](#outputs)
 - [Permissions](#permissions)
+- [Architecture](#architecture)
 - [How it works](#how-it-works)
 - [Notes](#notes)
 - [License](#license)
@@ -101,9 +102,25 @@ The assumed role must allow listing, deleting, and putting objects in the target
 
 </details>
 
+## Architecture
+
+Bash shell script wrapped by a composite GitHub Action.
+
+```
+├── action.yml                    # Composite action definition
+├── core/
+│   └── publish.sh                # CLI entry point — S3 bucket sync
+├── tests/
+│   ├── __mocks__/
+│   │   └── aws                   # AWS CLI stub (records invocations)
+│   └── action.bats               # BATS tests
+├── Makefile                      # test (bats) + lint (shellcheck)
+└── version.txt                   # Current version
+```
+
 ## How it works
 
-Composite action with a single shell script (`core/publish-s3-bucket.sh`):
+Composite action with a single shell script (`core/publish.sh`):
 
 1. **Validate inputs** — `BUCKET_NAME` and `BUILD_FOLDER` must be set.
 2. **Empty the target** — runs `aws s3 rm --recursive` on the destination bucket.

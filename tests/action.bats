@@ -1,12 +1,12 @@
 #!/usr/bin/env bats
-# bats tests for core/publish-s3-bucket.sh
+# bats tests for core/publish.sh
 #
 # Builds a throwaway cwd with a dist folder, points an `aws` stub at PATH,
 # runs the action script, and asserts on the logged aws calls / exit code.
 # No network, no real AWS.
 
 setup() {
-  SCRIPT="$BATS_TEST_DIRNAME/../core/publish-s3-bucket.sh"
+  SCRIPT="$BATS_TEST_DIRNAME/../core/publish.sh"
   STUB_DIR="$BATS_TEST_DIRNAME/__mocks__"   # contains the `aws` stub
 }
 
