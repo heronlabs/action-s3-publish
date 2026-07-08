@@ -30,7 +30,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: heronlabs/action-tag-release-build@d9ac68349e96b89e71fcda3d090d1128802e260e # v5.0.12
+      - uses: heronlabs/action-tag-release-build@v5 # v5.0.12
         with:
           gh_token: ${{ github.token }}
           semantic: ${{ inputs.semantic }}
