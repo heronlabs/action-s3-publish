@@ -1,11 +1,9 @@
 {
-  "stack": "bash",
-  "verify": {
-    "install": "true",
-    "lint": "make lint",
-    "test": "make test"
+  "baseBranch": "main",
+  "remote": "origin",
+  "lintCommand": "make lint",
+  "testCommands": {
+    "unit": "make test"
   },
-  "worktree": { "dir": ".worktrees", "base": "main" },
-  "pr": { "base": "main", "remote": "origin" },
-  "audits": { "security": true }
+  "mergeMethod": "squash"
 }

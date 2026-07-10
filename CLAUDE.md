@@ -1,5 +1,5 @@
 <!-- supera:guardrails -->
-## Working with this repo (managed by /init — edits between these markers are overwritten on re-init)
+## Working with this repo (managed by /start — edits between these markers are overwritten on re-run)
 
 - **Edit, don't rewrite.** Change only the needed entry in a config/generated file (`package.json`, lockfiles, manifests, CI yaml); preserve the rest. Never regenerate a whole file to add one line.
 - **No scope creep.** Build only what was asked; no speculative abstractions, layers, or options. Prefer the simplest working solution.
