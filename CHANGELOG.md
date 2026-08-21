@@ -1,3 +1,13 @@
+## v5.0.0 (2026-08-21)
+
+### ⚠ BREAKING CHANGES
+
+* feat!: add PRUNE_STALE and NO_CACHE_HTML inputs (#31) (343aa9372f11f2cb671d7fabf91cafc31dd90980)
+
+### Features
+
+* feat!: add PRUNE_STALE and NO_CACHE_HTML inputs (#31) (343aa9372f11f2cb671d7fabf91cafc31dd90980)
+
 ## v4.0.5 (2026-08-21)
 
 ### Miscellaneous Chores
