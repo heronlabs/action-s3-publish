@@ -1,3 +1,10 @@
+## v4.0.5 (2026-08-21)
+
+### Miscellaneous Chores
+
+* other: Fix casing of gh_token to ghToken in workflow (68c2d8c590564a114f8b70629611aa4282383f5e)
+* other(deps): bump heronlabs/action-tag-release-build (#30) (f0f0fc1e5e23d4436a6d69e31b86768cd5e8a52a)
+
 ## v4.0.4 (2026-07-17)
 
 
