@@ -27,6 +27,12 @@ inputs:
   PUBLIC_ACL:
     description: Set to `"true"` to apply `public-read` ACL. Defaults to `private`.
     required: false
+  PRUNE_STALE:
+    description: Set to `"false"` to keep previously published objects (skips the bucket wipe and `--delete`). Defaults to pruning.
+    required: false
+  NO_CACHE_HTML:
+    description: Set to `"true"` to publish `*.html` with `cache-control no-cache` (everything else keeps the long-lived cache header). Defaults to one cache header for all files.
+    required: false
 
 runs:
   using: composite
@@ -46,3 +52,5 @@ runs:
         BUILD_FOLDER: ${{ inputs.BUILD_FOLDER }}
         BUCKET_NAME: ${{ inputs.BUCKET_NAME }}
         PUBLIC_ACL: ${{ inputs.PUBLIC_ACL }}
+        PRUNE_STALE: ${{ inputs.PRUNE_STALE }}
+        NO_CACHE_HTML: ${{ inputs.NO_CACHE_HTML }}

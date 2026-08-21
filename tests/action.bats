@@ -89,3 +89,44 @@ line_of() { grep -n "$2" "$1" | head -1 | cut -d: -f1; }
 
   rm -f "$RUN_AWSLOG"
 }
+
+@test "prune stale false: no bucket rm, sync without --delete" {
+  run_action BUCKET_NAME=my-bucket BUILD_FOLDER=dist PRUNE_STALE=false
+
+  [ "$RUN_RC" -eq 0 ]
+  [ "$(grep -c 's3 rm' "$RUN_AWSLOG")" -eq 0 ]
+  grep -q 's3 sync ./dist s3://my-bucket' "$RUN_AWSLOG"
+  [ "$(grep 's3 sync' "$RUN_AWSLOG" | grep -c -- '--delete')" -eq 0 ]
+
+  rm -f "$RUN_AWSLOG"
+}
+
+@test "prune stale default: bucket rm and sync --delete preserved" {
+  run_action BUCKET_NAME=my-bucket BUILD_FOLDER=dist
+
+  [ "$RUN_RC" -eq 0 ]
+  grep -q 's3 rm s3://my-bucket --recursive' "$RUN_AWSLOG"
+  grep 's3 sync' "$RUN_AWSLOG" | grep -q -- '--delete'
+
+  rm -f "$RUN_AWSLOG"
+}
+
+@test "no cache html: two syncs, html gets no-cache, rest long cache" {
+  run_action BUCKET_NAME=my-bucket BUILD_FOLDER=dist NO_CACHE_HTML=true
+
+  [ "$RUN_RC" -eq 0 ]
+  [ "$(grep -c 's3 sync' "$RUN_AWSLOG")" -eq 2 ]
+  grep 's3 sync' "$RUN_AWSLOG" | grep -- '--exclude \*.html' | grep -q -- '--cache-control max-age=31536000,public'
+  grep 's3 sync' "$RUN_AWSLOG" | grep -- '--include \*.html' | grep -q -- '--cache-control no-cache'
+
+  rm -f "$RUN_AWSLOG"
+}
+
+@test "no cache html default: single sync, one cache-control" {
+  run_action BUCKET_NAME=my-bucket BUILD_FOLDER=dist
+
+  [ "$RUN_RC" -eq 0 ]
+  [ "$(grep -c 's3 sync' "$RUN_AWSLOG")" -eq 1 ]
+
+  rm -f "$RUN_AWSLOG"
+}
