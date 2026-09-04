@@ -1,3 +1,9 @@
+## v5.1.0 (2026-09-04)
+
+### Features
+
+* feat: add NO_CACHE_PATTERNS input (#32) (46284786515c45a207addd78aa12b1a99161fc7c)
+
 ## v5.0.0 (2026-08-21)
 
 ### ⚠ BREAKING CHANGES
