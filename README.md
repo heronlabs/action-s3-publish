@@ -69,6 +69,9 @@ jobs:
 | `BUILD_FOLDER` | Local folder (relative to the repo root) whose contents should be published. | Yes | — |
 | `BUCKET_NAME` | Destination S3 bucket name. | Yes | — |
 | `PUBLIC_ACL` | Set to `"true"` to apply `public-read` ACL. | No | `private` |
+| `PRUNE_STALE` | Set to `"false"` to keep previously published objects: skips the bucket wipe and `--delete`, so hashed assets from earlier deploys stay servable. | No | `true` |
+| `NO_CACHE_HTML` | Set to `"true"` to publish `*.html` with `cache-control no-cache`. | No | — |
+| `NO_CACHE_PATTERNS` | Comma-separated `aws s3 sync` patterns, matched against paths relative to `BUILD_FOLDER`, published with `cache-control no-cache`. Adds to `NO_CACHE_HTML`. Use it for files served at a fixed URL, such as a service worker or a web app manifest. | No | — |
 
 ## Outputs
 
@@ -127,6 +130,7 @@ Composite action with a single shell script (`core/publish.sh`):
 1. **Validate inputs** — `BUCKET_NAME` and `BUILD_FOLDER` must be set.
 2. **Empty the target** — runs `aws s3 rm --recursive` on the destination bucket.
 3. **Upload statics** — runs `aws s3 sync` from `BUILD_FOLDER` with cache headers (`max-age=31536000`), `INTELLIGENT_TIERING` storage class, and the configured ACL (`private` by default, `public-read` when `PUBLIC_ACL=true`).
+4. **Split the cache header** — when `NO_CACHE_HTML` or `NO_CACHE_PATTERNS` is set, the sync runs twice: once excluding the listed patterns with the long-lived header, once including only them with `cache-control no-cache`.
 
 Authenticates via `aws-actions/configure-aws-credentials` with an OIDC role.
 
@@ -134,6 +138,7 @@ Authenticates via `aws-actions/configure-aws-credentials` with an OIDC role.
 
 - **Destructive**: empties the bucket via `aws s3 rm --recursive` before uploading. Never point it at a bucket holding non-static files.
 - Uploads with long cache headers (`max-age=31536000`) and `INTELLIGENT_TIERING`. Pair with a CloudFront invalidation after each deploy, or use content-hashed filenames.
+- Files that keep the same name across deploys (`index.html`, `sw.js`, `manifest.webmanifest`) need `NO_CACHE_HTML` or `NO_CACHE_PATTERNS`, otherwise browsers hold the first copy for a year. Patterns follow `aws s3 sync` filter rules: `sw.js` matches only the file at the root of `BUILD_FOLDER`, `*.html` matches at any depth.
 - `PUBLIC_ACL: true` applies `public-read`; anything else stays private. May fail under account or bucket public-ACL blocks — prefer a bucket policy plus CloudFront OAC.
 
 ## License
