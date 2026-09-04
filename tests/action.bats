@@ -130,3 +130,36 @@ line_of() { grep -n "$2" "$1" | head -1 | cut -d: -f1; }
 
   rm -f "$RUN_AWSLOG"
 }
+
+@test "no cache patterns: every pattern excluded from the long cache sync and included in the no-cache sync" {
+  run_action BUCKET_NAME=my-bucket BUILD_FOLDER=dist NO_CACHE_PATTERNS='sw.js, manifest.webmanifest'
+
+  [ "$RUN_RC" -eq 0 ]
+  [ "$(grep -c 's3 sync' "$RUN_AWSLOG")" -eq 2 ]
+  grep 's3 sync' "$RUN_AWSLOG" | grep -- '--cache-control max-age=31536000,public' | grep -- '--exclude sw.js' | grep -q -- '--exclude manifest.webmanifest'
+  grep 's3 sync' "$RUN_AWSLOG" | grep -- '--cache-control no-cache' | grep -- '--exclude \*' | grep -- '--include sw.js' | grep -q -- '--include manifest.webmanifest'
+  [ "$(grep -c -- '--include  ' "$RUN_AWSLOG")" -eq 0 ]
+
+  rm -f "$RUN_AWSLOG"
+}
+
+@test "no cache patterns with no cache html: html joins the pattern list" {
+  run_action BUCKET_NAME=my-bucket BUILD_FOLDER=dist NO_CACHE_HTML=true NO_CACHE_PATTERNS='sw.js'
+
+  [ "$RUN_RC" -eq 0 ]
+  [ "$(grep -c 's3 sync' "$RUN_AWSLOG")" -eq 2 ]
+  grep 's3 sync' "$RUN_AWSLOG" | grep -- '--cache-control max-age=31536000,public' | grep -- '--exclude \*.html' | grep -q -- '--exclude sw.js'
+  grep 's3 sync' "$RUN_AWSLOG" | grep -- '--cache-control no-cache' | grep -- '--include \*.html' | grep -q -- '--include sw.js'
+
+  rm -f "$RUN_AWSLOG"
+}
+
+@test "no cache patterns blank: single sync, one cache-control" {
+  run_action BUCKET_NAME=my-bucket BUILD_FOLDER=dist NO_CACHE_PATTERNS=' , '
+
+  [ "$RUN_RC" -eq 0 ]
+  [ "$(grep -c 's3 sync' "$RUN_AWSLOG")" -eq 1 ]
+  [ "$(grep -c -- '--exclude' "$RUN_AWSLOG")" -eq 0 ]
+
+  rm -f "$RUN_AWSLOG"
+}

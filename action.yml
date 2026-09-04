@@ -33,6 +33,9 @@ inputs:
   NO_CACHE_HTML:
     description: Set to `"true"` to publish `*.html` with `cache-control no-cache` (everything else keeps the long-lived cache header). Defaults to one cache header for all files.
     required: false
+  NO_CACHE_PATTERNS:
+    description: Comma-separated `aws s3 sync` patterns, matched against paths relative to `BUILD_FOLDER`, published with `cache-control no-cache` (everything else keeps the long-lived cache header). Adds to `NO_CACHE_HTML`. Example `sw.js,manifest.webmanifest`.
+    required: false
 
 runs:
   using: composite
@@ -54,3 +57,4 @@ runs:
         PUBLIC_ACL: ${{ inputs.PUBLIC_ACL }}
         PRUNE_STALE: ${{ inputs.PRUNE_STALE }}
         NO_CACHE_HTML: ${{ inputs.NO_CACHE_HTML }}
+        NO_CACHE_PATTERNS: ${{ inputs.NO_CACHE_PATTERNS }}
